@@ -1,0 +1,8 @@
+type PairCreated @entity {
+  id: ID!
+  exchangeAddress: Bytes! # address
+  hyperobjectAddress: Bytes! # address
+  name: String! # string
+  symbol: String! # string
+  creator: Bytes! # address
+}
