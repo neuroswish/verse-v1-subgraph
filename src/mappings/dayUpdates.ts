@@ -1,4 +1,4 @@
-import { log, BigDecimal, BigInt, ethereum } from "@graphprotocol/graph-ts";
+import { log, BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { ExchangeHourData, ExchangeDayData, VerseDayData, PairFactory, Exchange } from "../../generated/schema";
 import { PAIR_FACTORY_ADDRESS, ONE_BI, ZERO_BD, ZERO_BI, MAX_RATIO } from "./helpers";
 

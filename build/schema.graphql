@@ -19,7 +19,6 @@ type Exchange @entity {
   symbol: String!
   deployer: Bytes!
   creator: Bytes!
-  hyperobject: Bytes!
   poolBalance: BigInt!
   totalSupply: BigInt!
   reserveRatio: BigInt!

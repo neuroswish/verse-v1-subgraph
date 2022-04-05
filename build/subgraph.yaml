@@ -1,0 +1,50 @@
+specVersion: 0.0.2
+description: Verse is the hyperexchange protocol on Ethereum
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: pairFactory
+    network: mainnet
+    source:
+      address: "0x519204EC6318320842843D84aD1d776E905a73aA"
+      abi: pairFactory
+      startBlock: 14491583
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - PairCreated
+      abis:
+        - name: pairFactory
+          file: pairFactory/abis/pairFactory.json
+      eventHandlers:
+        - event: PairCreated(address,address,string,string,address)
+          handler: handlePairCreated
+      file: pairFactory/pairFactory.wasm
+templates:
+  - kind: ethereum/contract
+    name: Exchange
+    network: mainnet
+    source:
+      abi: Exchange
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: templates/Exchange/Exchange.wasm
+      entities:
+        - Exchange
+      abis:
+        - name: Exchange
+          file: Exchange/abis/exchange.json
+        - name: PairFactory
+          file: Exchange/abis/pairFactory.json
+      eventHandlers:
+        - event: Buy(indexed address,uint256,uint256,uint256,uint256)
+          handler: handleBuy
+        - event: Sell(indexed address,uint256,uint256,uint256,uint256)
+          handler: handleSell
+        - event: Redeem(indexed address)
+          handler: handleRedeem
