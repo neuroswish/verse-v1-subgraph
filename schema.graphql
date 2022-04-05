@@ -1,8 +1,130 @@
-type PairCreated @entity {
+# contracts
+
+type PairFactory @entity {
+  # factory address
   id: ID!
-  exchangeAddress: Bytes! # address
-  hyperobjectAddress: Bytes! # address
-  name: String! # string
-  symbol: String! # string
-  creator: Bytes! # address
+
+  # volume stats
+  totalVolumeETH: BigInt!
+  pairCount: BigInt!
+  txCount: BigInt!
+}
+
+type Exchange @entity {
+  # address
+  id: ID!
+
+  # mirrored from smart contract
+  name: String!
+  symbol: String!
+  deployer: Bytes!
+  creator: Bytes!
+  poolBalance: BigInt!
+  totalSupply: BigInt!
+  reserveRatio: BigInt!
+
+  # token price
+  tokenPriceNumerator: BigInt!
+  tokenPriceDenominator: BigInt!
+
+  # lifetime volume stats
+  volumeETH: BigInt!
+  txCount: BigInt!
+
+  # derived fields
+  positions: [Position!]! @derivedFrom(field: "exchange")
+  buys: [Buy!]! @derivedFrom(field: "exchange")
+  sells: [Sell!]! @derivedFrom(field: "exchange")
+  redemptions: [Redeem!]! @derivedFrom(field: "exchange")
+  exchangeHourData: [ExchangeHourData!]! @derivedFrom(field: "exchange")
+  exchangeDayData: [ExchangeDayData!]! @derivedFrom(field: "exchange")
+}
+
+# interactions
+
+type User @entity {
+  id: ID!
+  positions: [Position!]! @derivedFrom(field: "user")
+}
+
+type Position @entity {
+  # id will be combination of exchange - user
+  id: ID!
+  user: User!
+  exchange: Exchange!
+  balance: BigInt!
+}
+
+# events
+
+type Redeem @entity {
+  id: ID! # txn hash
+  blockNumber: BigInt!
+  timestamp: BigInt!
+  exchange: Exchange!
+  redeemer: Bytes!
+}
+
+type Buy @entity {
+  id: ID! # txn hash
+  blockNumber: BigInt!
+  timestamp: BigInt!
+  exchange: Exchange!
+  amount: BigInt!
+  price: BigInt!
+  buyer: Bytes!
+}
+
+type Sell @entity {
+  id: ID! # txn hash
+  blockNumber: BigInt!
+  timestamp: BigInt!
+  exchange: Exchange!
+  amount: BigInt!
+  price: BigInt!
+  seller: Bytes!
+}
+
+# Data accumulated and condensed into stats for all of Verse
+
+type VerseDayData @entity {
+  id: ID! # timestamp rounded to current day by dividing by 86400
+  date: Int!
+
+  # volume stats
+  dailyVolumeETH: BigInt!
+  totalVolumeETH: BigInt!
+  txCount: BigInt!
+}
+
+type ExchangeHourData @entity {
+  id: ID!
+  hourStartUnix: Int! # unix timestamp for start of hour
+  exchange: Exchange!
+
+  # price stats
+  tokenPriceNumerator: BigInt!
+  tokenPriceDenominator: BigInt!
+  totalSupply: BigInt!
+
+  # volume stats
+  hourlyVolumeToken: BigInt!
+  hourlyVolumeETH: BigInt!
+  hourlyTxns: BigInt!
+}
+
+type ExchangeDayData @entity {
+  id: ID!
+  date: Int!
+  exchange: Exchange!
+
+  # price stats
+  tokenPriceNumerator: BigInt!
+  tokenPriceDenominator: BigInt!
+  totalSupply: BigInt!
+
+  # volume stats
+  dailyVolumeToken: BigInt!
+  dailyVolumeETH: BigInt!
+  dailyTxns: BigInt!
 }
