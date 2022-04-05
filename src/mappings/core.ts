@@ -52,8 +52,6 @@ export function handleBuy(event: Buy): void {
   let totalSupply = event.params.totalSupply
   exchange.poolBalance = poolBalance
   exchange.totalSupply = totalSupply
-  exchange.tokenPriceNumerator = (exchange.poolBalance).times(MAX_RATIO)
-  exchange.tokenPriceDenominator = (exchange.totalSupply).times(exchange.reserveRatio)
   exchange.save()
 
   // update hourly, daily, and global values
@@ -77,8 +75,6 @@ export function handleBuy(event: Buy): void {
   let exchangeDayData = updateExchangeDayData(event)
   exchangeDayData.dailyVolumeETH = exchangeDayData.dailyVolumeETH.plus(price)
   exchangeDayData.dailyVolumeToken = exchangeDayData.dailyVolumeToken.plus(amount)
-  exchangeDayData.tokenPriceNumerator = exchange.tokenPriceNumerator
-  exchangeDayData.tokenPriceDenominator = exchange.tokenPriceDenominator
   exchangeDayData.save()
 
   // hourly exchange
@@ -120,8 +116,6 @@ export function handleSell(event: Sell): void {
   let totalSupply = event.params.totalSupply
   exchange.poolBalance = poolBalance
   exchange.totalSupply = totalSupply
-  exchange.tokenPriceNumerator = (exchange.poolBalance).times(MAX_RATIO)
-  exchange.tokenPriceDenominator = (exchange.totalSupply).times(exchange.reserveRatio)
 
   // update hourly, daily, and global values
   // global Verse
@@ -144,16 +138,12 @@ export function handleSell(event: Sell): void {
   let exchangeDayData = updateExchangeDayData(event)
   exchangeDayData.dailyVolumeETH = exchangeDayData.dailyVolumeETH.plus(price)
   exchangeDayData.dailyVolumeToken = exchangeDayData.dailyVolumeToken.plus(amount)
-  exchangeDayData.tokenPriceNumerator = exchange.tokenPriceNumerator
-  exchangeDayData.tokenPriceDenominator = exchange.tokenPriceDenominator
   exchangeDayData.save()
 
   // hourly exchange
   let exchangeHourData = updateExchangeHourData(event)
   exchangeHourData.hourlyVolumeETH = exchangeHourData.hourlyVolumeETH.plus(price)
   exchangeHourData.hourlyVolumeToken = exchangeHourData.hourlyVolumeToken.plus(amount)
-  exchangeDayData.tokenPriceNumerator = exchange.tokenPriceNumerator
-  exchangeDayData.tokenPriceDenominator = exchange.tokenPriceDenominator
   exchangeHourData.save()
 }
 

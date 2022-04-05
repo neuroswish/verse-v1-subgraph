@@ -84,11 +84,9 @@ export class Exchange extends Entity {
     this.set("symbol", Value.fromString(""));
     this.set("deployer", Value.fromBytes(Bytes.empty()));
     this.set("creator", Value.fromBytes(Bytes.empty()));
+    this.set("hyperobject", Value.fromBytes(Bytes.empty()));
     this.set("poolBalance", Value.fromBigInt(BigInt.zero()));
     this.set("totalSupply", Value.fromBigInt(BigInt.zero()));
-    this.set("reserveRatio", Value.fromBigInt(BigInt.zero()));
-    this.set("tokenPriceNumerator", Value.fromBigInt(BigInt.zero()));
-    this.set("tokenPriceDenominator", Value.fromBigInt(BigInt.zero()));
     this.set("volumeETH", Value.fromBigInt(BigInt.zero()));
     this.set("txCount", Value.fromBigInt(BigInt.zero()));
   }
@@ -155,6 +153,15 @@ export class Exchange extends Entity {
     this.set("creator", Value.fromBytes(value));
   }
 
+  get hyperobject(): Bytes {
+    let value = this.get("hyperobject");
+    return value!.toBytes();
+  }
+
+  set hyperobject(value: Bytes) {
+    this.set("hyperobject", Value.fromBytes(value));
+  }
+
   get poolBalance(): BigInt {
     let value = this.get("poolBalance");
     return value!.toBigInt();
@@ -171,33 +178,6 @@ export class Exchange extends Entity {
 
   set totalSupply(value: BigInt) {
     this.set("totalSupply", Value.fromBigInt(value));
-  }
-
-  get reserveRatio(): BigInt {
-    let value = this.get("reserveRatio");
-    return value!.toBigInt();
-  }
-
-  set reserveRatio(value: BigInt) {
-    this.set("reserveRatio", Value.fromBigInt(value));
-  }
-
-  get tokenPriceNumerator(): BigInt {
-    let value = this.get("tokenPriceNumerator");
-    return value!.toBigInt();
-  }
-
-  set tokenPriceNumerator(value: BigInt) {
-    this.set("tokenPriceNumerator", Value.fromBigInt(value));
-  }
-
-  get tokenPriceDenominator(): BigInt {
-    let value = this.get("tokenPriceDenominator");
-    return value!.toBigInt();
-  }
-
-  set tokenPriceDenominator(value: BigInt) {
-    this.set("tokenPriceDenominator", Value.fromBigInt(value));
   }
 
   get volumeETH(): BigInt {
@@ -720,8 +700,7 @@ export class ExchangeHourData extends Entity {
     this.set("id", Value.fromString(id));
 
     this.set("exchange", Value.fromString(""));
-    this.set("tokenPriceNumerator", Value.fromBigInt(BigInt.zero()));
-    this.set("tokenPriceDenominator", Value.fromBigInt(BigInt.zero()));
+    this.set("poolBalance", Value.fromBigInt(BigInt.zero()));
     this.set("totalSupply", Value.fromBigInt(BigInt.zero()));
     this.set("hourlyVolumeToken", Value.fromBigInt(BigInt.zero()));
     this.set("hourlyVolumeETH", Value.fromBigInt(BigInt.zero()));
@@ -774,22 +753,13 @@ export class ExchangeHourData extends Entity {
     this.set("exchange", Value.fromString(value));
   }
 
-  get tokenPriceNumerator(): BigInt {
-    let value = this.get("tokenPriceNumerator");
+  get poolBalance(): BigInt {
+    let value = this.get("poolBalance");
     return value!.toBigInt();
   }
 
-  set tokenPriceNumerator(value: BigInt) {
-    this.set("tokenPriceNumerator", Value.fromBigInt(value));
-  }
-
-  get tokenPriceDenominator(): BigInt {
-    let value = this.get("tokenPriceDenominator");
-    return value!.toBigInt();
-  }
-
-  set tokenPriceDenominator(value: BigInt) {
-    this.set("tokenPriceDenominator", Value.fromBigInt(value));
+  set poolBalance(value: BigInt) {
+    this.set("poolBalance", Value.fromBigInt(value));
   }
 
   get totalSupply(): BigInt {
@@ -835,8 +805,7 @@ export class ExchangeDayData extends Entity {
     this.set("id", Value.fromString(id));
 
     this.set("exchange", Value.fromString(""));
-    this.set("tokenPriceNumerator", Value.fromBigInt(BigInt.zero()));
-    this.set("tokenPriceDenominator", Value.fromBigInt(BigInt.zero()));
+    this.set("poolBalance", Value.fromBigInt(BigInt.zero()));
     this.set("totalSupply", Value.fromBigInt(BigInt.zero()));
     this.set("dailyVolumeToken", Value.fromBigInt(BigInt.zero()));
     this.set("dailyVolumeETH", Value.fromBigInt(BigInt.zero()));
@@ -887,22 +856,13 @@ export class ExchangeDayData extends Entity {
     this.set("exchange", Value.fromString(value));
   }
 
-  get tokenPriceNumerator(): BigInt {
-    let value = this.get("tokenPriceNumerator");
+  get poolBalance(): BigInt {
+    let value = this.get("poolBalance");
     return value!.toBigInt();
   }
 
-  set tokenPriceNumerator(value: BigInt) {
-    this.set("tokenPriceNumerator", Value.fromBigInt(value));
-  }
-
-  get tokenPriceDenominator(): BigInt {
-    let value = this.get("tokenPriceDenominator");
-    return value!.toBigInt();
-  }
-
-  set tokenPriceDenominator(value: BigInt) {
-    this.set("tokenPriceDenominator", Value.fromBigInt(value));
+  set poolBalance(value: BigInt) {
+    this.set("poolBalance", Value.fromBigInt(value));
   }
 
   get totalSupply(): BigInt {

@@ -22,11 +22,9 @@ export function handlePairCreated(event: PairCreated): void {
   exchange.symbol = event.params.symbol;
   exchange.deployer = event.address;
   exchange.creator = event.params.creator;
+  exchange.hyperobject = event.params.hyperobjectAddress
   exchange.poolBalance = ZERO_BI;
   exchange.totalSupply = ZERO_BI;
-  exchange.reserveRatio = RESERVE_RATIO;
-  exchange.tokenPriceNumerator = ZERO_BI;
-  exchange.tokenPriceDenominator = ZERO_BI;
   exchange.txCount = ZERO_BI;
   exchange.volumeETH = ZERO_BI;
 
