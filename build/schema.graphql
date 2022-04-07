@@ -22,12 +22,7 @@ type Exchange @entity {
   hyperobject: Bytes!
   poolBalance: BigInt!
   totalSupply: BigInt!
-  reserveRatio: BigInt!
-
-  # token price
-  tokenPriceNumerator: BigInt!
-  tokenPriceDenominator: BigInt!
-
+  
   # lifetime volume stats
   volumeETH: BigInt!
   txCount: BigInt!
@@ -104,8 +99,7 @@ type ExchangeHourData @entity {
   exchange: Exchange!
 
   # price stats
-  tokenPriceNumerator: BigInt!
-  tokenPriceDenominator: BigInt!
+  poolBalance: BigInt!
   totalSupply: BigInt!
 
   # volume stats
@@ -120,8 +114,7 @@ type ExchangeDayData @entity {
   exchange: Exchange!
 
   # price stats
-  tokenPriceNumerator: BigInt!
-  tokenPriceDenominator: BigInt!
+  poolBalance: BigInt!
   totalSupply: BigInt!
 
   # volume stats
