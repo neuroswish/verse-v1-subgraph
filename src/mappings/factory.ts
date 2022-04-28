@@ -1,5 +1,6 @@
 import { PairFactory, Exchange } from '../../generated/schema'
 import { Exchange as ExchangeTemplate } from '../../generated/templates'
+import { Hyperobject as HyperobjectContract } from '../../generated/templates/Exchange/Hyperobject'
 
 import { PairCreated } from '../../generated/PairFactory/PairFactory'
 import { PAIR_FACTORY_ADDRESS, ONE_BI, RESERVE_RATIO, ZERO_BI } from './helpers'
@@ -15,6 +16,7 @@ export function handlePairCreated(event: PairCreated): void {
   }
   pairFactory.pairCount = pairFactory.pairCount.plus(ONE_BI)
   pairFactory.save();
+  
 
   // create new exchange instance
   let exchange = new Exchange(event.params.exchangeAddress.toHexString()) as Exchange
@@ -27,6 +29,11 @@ export function handlePairCreated(event: PairCreated): void {
   exchange.totalSupply = ZERO_BI;
   exchange.txCount = ZERO_BI;
   exchange.volumeETH = ZERO_BI;
+
+  // get hyperobject contract from chain
+  let hyperobjectContract = HyperobjectContract.bind(event.params.hyperobjectAddress)
+  let tokenURI = hyperobjectContract.baseURI()
+  exchange.tokenURI = tokenURI
 
   // create the tracked contract based on the template
   ExchangeTemplate.create(event.params.exchangeAddress)

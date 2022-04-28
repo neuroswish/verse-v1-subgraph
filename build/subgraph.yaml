@@ -19,6 +19,8 @@ dataSources:
       abis:
         - name: pairFactory
           file: pairFactory/abis/pairFactory.json
+        - name: Hyperobject
+          file: pairFactory/abis/hyperobject.json
       eventHandlers:
         - event: PairCreated(address,address,string,string,address)
           handler: handlePairCreated
@@ -41,6 +43,8 @@ templates:
           file: Exchange/abis/exchange.json
         - name: PairFactory
           file: Exchange/abis/pairFactory.json
+        - name: Hyperobject
+          file: Exchange/abis/hyperobject.json
       eventHandlers:
         - event: Buy(indexed address,uint256,uint256,uint256,uint256)
           handler: handleBuy

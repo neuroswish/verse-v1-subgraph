@@ -87,6 +87,7 @@ export class Exchange extends Entity {
     this.set("hyperobject", Value.fromBytes(Bytes.empty()));
     this.set("poolBalance", Value.fromBigInt(BigInt.zero()));
     this.set("totalSupply", Value.fromBigInt(BigInt.zero()));
+    this.set("tokenURI", Value.fromString(""));
     this.set("volumeETH", Value.fromBigInt(BigInt.zero()));
     this.set("txCount", Value.fromBigInt(BigInt.zero()));
   }
@@ -178,6 +179,15 @@ export class Exchange extends Entity {
 
   set totalSupply(value: BigInt) {
     this.set("totalSupply", Value.fromBigInt(value));
+  }
+
+  get tokenURI(): string {
+    let value = this.get("tokenURI");
+    return value!.toString();
+  }
+
+  set tokenURI(value: string) {
+    this.set("tokenURI", Value.fromString(value));
   }
 
   get volumeETH(): BigInt {
